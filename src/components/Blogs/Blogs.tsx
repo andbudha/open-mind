@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { AppRootState } from '../../redux/store';
 import { Blog } from '../../assets/common/types';
-import { BlogCard } from './Blog/Blog';
+import { BlogCard } from './BlogCard/BlogCard';
 
 const styles = {
   main_box: `flex justify-center`,
