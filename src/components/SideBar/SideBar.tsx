@@ -1,7 +1,6 @@
 import { AiOutlineHome } from 'react-icons/ai';
 import { LuPenSquare } from 'react-icons/lu';
 import { NavLink } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 
 const sidebar = {
   main: `center w-60 min-h-screen bg-[#f3f4f6] flex flex-col items-center`,
