@@ -4,13 +4,12 @@ import { Blog } from '../../assets/common/types';
 import { BlogCard } from './BlogCard/BlogCard';
 
 const styles = {
-  main_box: `flex justify-center`,
-  blogs: `grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 `,
+  main_box: `container flex justify-center items-center`,
+  blogs: `grid lg:grid-cols-2 md:grid-cols-1  gap-8 `,
 };
 
 export const Blogs = () => {
   const blogs = useSelector<AppRootState, Blog[]>((state) => state.blogs.blogs);
-  console.log(blogs);
 
   const blogList = blogs.map((blog) => (
     <BlogCard

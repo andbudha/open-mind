@@ -1,15 +1,15 @@
 import './App.css';
 import { Blogs } from './components/Blogs/Blogs';
-import { Header } from './components/Header/Header';
+import { SideBar } from './components/SideBar/SideBar';
 const styles = {
   main: `flex justify-center `,
-  container: `center container xl bg-[#f0f9ff] min-h-screen pb-5`,
+  container: `container flex bg-[#fafafa] min-h-screen`,
 };
 function App() {
   return (
     <div className={styles.main}>
       <div className={styles.container}>
-        <Header />
+        <SideBar />
         <Blogs />
       </div>
     </div>
