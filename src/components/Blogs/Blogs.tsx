@@ -18,6 +18,7 @@ export const Blogs = () => {
       title={blog.title}
       content={blog.content}
       author={blog.author}
+      image={blog.image}
     />
   ));
   return (
