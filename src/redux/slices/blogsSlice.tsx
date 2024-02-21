@@ -10,9 +10,15 @@ export const slice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchBlogs.fulfilled, (state, action) => {
-      state.blogs = action.payload?.blogs;
-    });
+    builder
+      .addCase(fetchBlogs.fulfilled, (state, action) => {
+        if (action.payload?.blogs) {
+          state.blogs = action.payload?.blogs;
+        }
+      })
+      .addCase(postBlog.fulfilled, (state, action) => {
+        state.blogs.unshift(action.payload?.newBlog);
+      });
   },
 });
 
@@ -24,5 +30,14 @@ const fetchBlogs = createAsyncThunk('blogs/fetchBlogs', async () => {
     return { blogs };
   } catch (error) {}
 });
+
+const postBlog = createAsyncThunk('blogs/postBlog', async (blog: Blog) => {
+  try {
+    const res = await blogsAPI.postBlog(blog);
+    const newBlog = res.data;
+    console.log(newBlog);
+    return { newBlog };
+  } catch (error) {}
+});
 export const blogs = slice.reducer;
-export const blogsThunks = { fetchBlogs };
+export const blogsThunks = { fetchBlogs, postBlog };
