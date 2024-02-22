@@ -1,62 +1,94 @@
 import { useFormik } from 'formik';
+import { AppRootState, useAppDispatch } from '../../../redux/store';
+import { blogsThunks } from '../../../redux/slices/blogsSlice';
+import { useSelector } from 'react-redux';
 
 const blogform = {
-  main_box: `container h-full w-full flex justify-center items-center `,
-  blogform_box: `flex justify-center items-center h-[500px] w-[350px] border-[1px] border-orange-200 rounded shadow-md`,
+  main_box: `container h-full w-full flex justify-center items-center`,
+  blogform_box: `flex justify-center items-center min-h-[500px] w-[350px] border-[1px] border-orange-200 rounded shadow-md p-2`,
   form_box: `flex flex-col`,
   input: `h-[40px] w-[320px] border-[1px] border-orange-400 my-1 p-2 rounded focus:outline-none focus:ring-1 ring-orange-500 focus:border-orange-500`,
   textarea: `border-[1px] border-orange-400 my-1 p-2 rounded focus:outline-none focus:ring-1 ring-orange-500 focus:border-orange-500`,
   submit_btn: `h-[40px] w-[320px] text-[#FC6736] border-[1px] border-orange-400 my-1 p-2 rounded`,
+  error_style: `text-xs text-red-700 mt-2 tracking-wide`,
+};
+
+type FormikValues = {
+  id: number;
+  author: string;
+  title: string;
+  image: string;
+  content: string;
 };
 
 export const BlogForm = () => {
+  const dispatch = useAppDispatch();
+  const newRandomImage = useSelector<AppRootState, string>(
+    (state) => state.blogs.randomBlogImage
+  );
+
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
+      id: 0,
+      author: '',
+      title: '',
+      image: '',
       content: '',
     },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+
+    onSubmit: (values: FormikValues) => {
+      dispatch(blogsThunks.postBlog({ ...values, image: newRandomImage }));
+      console.log('ok');
     },
   });
+
+  const getImageHandler = () => {
+    dispatch(blogsThunks.fetchImage(formik.values.image));
+  };
   return (
     <div className={blogform.main_box}>
       <div className={blogform.blogform_box}>
         <form className={blogform.form_box} onSubmit={formik.handleSubmit}>
-          {/* <label htmlFor="firstName">First Name</label> */}
+          {formik.errors.author ? (
+            <div className={blogform.error_style}>{formik.errors.author}</div>
+          ) : null}
           <input
             className={blogform.input}
-            id="firstName"
-            name="firstName"
+            id="author"
+            name="author"
             type="text"
             placeholder="your name..."
             onChange={formik.handleChange}
-            value={formik.values.firstName}
+            value={formik.values.author}
           />
-
-          {/* <label htmlFor="lastName">Last Name</label> */}
+          {formik.errors.title ? (
+            <div className={blogform.error_style}>{formik.errors.title}</div>
+          ) : null}
           <input
             className={blogform.input}
-            id="lastName"
-            name="lastName"
+            id="title"
+            name="title"
             type="text"
             placeholder="blog title..."
             onChange={formik.handleChange}
-            value={formik.values.lastName}
+            value={formik.values.title}
           />
-
-          {/* <label htmlFor="email">Email Address</label> */}
+          {formik.errors.image ? (
+            <div className={blogform.error_style}>{formik.errors.image}</div>
+          ) : null}
           <input
             className={blogform.input}
-            id="email"
-            name="email"
-            type="email"
+            id="image"
+            name="image"
+            type="text"
             placeholder="blog keyword..."
             onChange={formik.handleChange}
-            value={formik.values.email}
+            value={formik.values.image}
+            onBlur={getImageHandler}
           />
+          {formik.errors.content ? (
+            <div className={blogform.error_style}>{formik.errors.content}</div>
+          ) : null}
           <textarea
             className={blogform.textarea}
             id="content"
@@ -67,7 +99,6 @@ export const BlogForm = () => {
             onChange={formik.handleChange}
             value={formik.values.content}
           />
-
           <button className={blogform.submit_btn} type="submit">
             Submit
           </button>

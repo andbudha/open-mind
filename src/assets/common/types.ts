@@ -5,3 +5,8 @@ export type Blog = {
   author: string;
   image: string;
 };
+
+export type InitialState = {
+  blogs: Blog[];
+  randomBlogImage: string;
+};
