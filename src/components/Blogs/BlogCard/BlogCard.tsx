@@ -1,7 +1,9 @@
 import { LuThumbsUp, LuThumbsDown } from 'react-icons/lu';
+import { NavLink } from 'react-router-dom';
+import defaultBlogImage from '../../../assets/images/blog_image/default_blog_img.avif';
 
 const styles = {
-  blog_card: `w-80 h-96 bg-[#fff] border-zinc-600 shadow-sm shadow-zinc-600 rounded-md my-6`,
+  blog_card: `w-80 h-96 bg-[#fff] border-zinc-600 shadow-lg rounded-md my-6 hover:shadow-zinc-400`,
   img_box: `w-80 h-40 bg-[#fff7ed]`,
   img: `w-full h-40 rounded-t-md`,
   info_box: `p-4 tracking-wide`,
@@ -24,10 +26,12 @@ type BlogCard = {
   image: string;
 };
 export const BlogCard = ({ id, title, content, author, image }: BlogCard) => {
+  const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+  const blogImage = urlRegex.test(image) ? image : defaultBlogImage;
   return (
     <div className={styles.blog_card}>
       <div className={styles.img_box}>
-        <img className={styles.img} src={image} alt="blog image" />
+        <img className={styles.img} src={blogImage} alt="blog image" />
       </div>
       <div className={styles.info_box}>
         <div className={styles.title_box}>{title}</div>
@@ -44,9 +48,11 @@ export const BlogCard = ({ id, title, content, author, image }: BlogCard) => {
               <div className={styles.likes}>{120}</div>
             </div>
           </div>
-          <div className={styles.btn_box}>
-            <div className={styles.btn}>Read</div>
-          </div>
+          <NavLink to={`${id}`}>
+            <div className={styles.btn_box}>
+              <div className={styles.btn}>Read</div>
+            </div>
+          </NavLink>
         </div>
       </div>
     </div>
