@@ -1,16 +1,21 @@
 import { useSelector } from 'react-redux';
-import { AppRootState } from '../../redux/store';
+import { AppRootState, useAppDispatch } from '../../redux/store';
 import { Blog } from '../../assets/common/types';
 import { BlogCard } from './BlogCard/BlogCard';
+import { useEffect } from 'react';
+import { blogsActions } from '../../redux/slices/blogsSlice';
 
 const styles = {
-  main_box: `container flex justify-center items-center`,
-  blogs: `grid lg:grid-cols-2 md:grid-cols-1  gap-8 `,
+  main_box: `h-full w-full flex justify-center items-center`,
+  blogs: `h-full grid xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1  gap-10 mt-10`,
 };
 
 export const Blogs = () => {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(blogsActions.editBlogStatus({ status: 'awaiting' }));
+  }, []);
   const blogs = useSelector<AppRootState, Blog[]>((state) => state.blogs.blogs);
-
   const blogList = blogs.map((blog) => (
     <BlogCard
       key={blog.id}
