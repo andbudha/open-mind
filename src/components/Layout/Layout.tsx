@@ -1,14 +1,21 @@
 import { Outlet } from 'react-router';
-import { SideBar } from '../SideBar/SideBar';
-const styles = {
-  container: `container flex bg-[#fafafa] min-h-screen`,
+import { Navbar } from '../Navbar/Navbar';
+import { Footer } from '../Footer/Footer';
+
+const layout = {
+  container: `bg-[#fafafa] h-svh flex flex-col justify-between`,
+  layout_box: ``,
 };
 
 export const Layout = () => {
   return (
-    <div className={styles.container}>
-      <SideBar />
-      <Outlet />
+    <div className={layout.container}>
+      <Navbar />
+      <div className={layout.layout_box}>
+        {' '}
+        <Outlet />
+      </div>
+      <Footer />
     </div>
   );
 };
