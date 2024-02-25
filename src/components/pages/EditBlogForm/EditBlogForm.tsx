@@ -3,8 +3,13 @@ import { AppRootState, useAppDispatch } from '../../../redux/store';
 import { blogsThunks } from '../../../redux/slices/blogsSlice';
 import { useSelector } from 'react-redux';
 import { Loader } from '../../Loader/Loader';
-import { Blog, FormikCommonValues } from '../../../assets/common/types';
-import { useParams } from 'react-router';
+import {
+  Blog,
+  BlogStatus,
+  FormikCommonValues,
+  RequestStauts,
+} from '../../../assets/common/types';
+import { Navigate, useParams } from 'react-router';
 
 const editblogform = {
   main_box: `relative container h-full w-full flex justify-center items-center text-slate-500 my-12 bg-[#fafafa]`,
@@ -19,11 +24,14 @@ const editblogform = {
 export const EditBlogForm = () => {
   const dispatch = useAppDispatch();
   const { id } = useParams();
+  const blogStatus = useSelector<AppRootState, BlogStatus>(
+    (state) => state.blogs.blogStatus
+  );
   const blogs = useSelector<AppRootState, Blog[]>((state) => state.blogs.blogs);
-  const blog = blogs.find((blog: Blog) => blog.id === Number(id));
+  const blog = blogs.find((blog) => blog.id === Number(id));
 
-  const isLoading = useSelector<AppRootState, boolean>(
-    (state) => state.blogs.isLoading
+  const requestStatuts = useSelector<AppRootState, RequestStauts>(
+    (state) => state.blogs.requestStatuts
   );
 
   const validate = (values: FormikCommonValues) => {
@@ -47,17 +55,18 @@ export const EditBlogForm = () => {
       ...blog,
     },
     validate,
-    onSubmit: (values, onSubmitProps) => {
-      //dispatch(blogsThunks.editBlog());
+    onSubmit: (values) => {
+      dispatch(blogsThunks.editBlog(values));
       console.log(values);
-
-      //onSubmitProps.resetForm();
     },
   });
 
+  if (blogStatus === 'edited') {
+    return <Navigate to={`/blogs/${id}`} />;
+  }
   return (
     <div className={editblogform.main_box}>
-      {isLoading && <Loader />}
+      {requestStatuts === 'loading' && <Loader />}
       <div className={editblogform.blogform_box}>
         <form className={editblogform.form_box} onSubmit={formik.handleSubmit}>
           {formik.errors.author ? (

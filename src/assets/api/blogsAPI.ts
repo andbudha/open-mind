@@ -12,4 +12,10 @@ export const blogsAPI = {
   postBlog: (blog: Blog) => {
     return instance.post('', blog);
   },
+  editBlog: (blog: Blog) => {
+    return instance.patch(`/${blog.id}`, blog);
+  },
+  deleteBlog: (id: number) => {
+    return instance.delete(`/${id}`);
+  },
 };

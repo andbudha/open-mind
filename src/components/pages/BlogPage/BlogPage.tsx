@@ -4,8 +4,9 @@ import { AppRootState, useAppDispatch } from '../../../redux/store';
 import { Blog, BlogStatus, RequestStauts } from '../../../assets/common/types';
 import { NavLink } from 'react-router-dom';
 import { LuThumbsUp, LuThumbsDown } from 'react-icons/lu';
-import { blogsThunks } from '../../../redux/slices/blogsSlice';
+import { blogsActions, blogsThunks } from '../../../redux/slices/blogsSlice';
 import { Loader } from '../../Loader/Loader';
+import { useEffect } from 'react';
 
 const blogpage = {
   main_box: `h-full w-full flex justify-center items-start text-slate-600 bg-[#fafafa]`,
@@ -30,6 +31,9 @@ const blogpage = {
 export const BlogPage = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(blogsActions.editBlogStatus({ status: 'awaiting' }));
+  }, []);
   const requestStatuts = useSelector<AppRootState, RequestStauts>(
     (state) => state.blogs.requestStatuts
   );
