@@ -36,16 +36,16 @@ export const slice = createSlice({
         state.requestStatuts = 'loading';
       })
       .addCase(postBlog.fulfilled, (state, action) => {
-        state.blogStatus = 'posted';
+        state.blogStatus = 'added';
         state.requestStatuts = 'idle';
         state.blogs.push(action.payload?.newBlog);
-        state.blogStatus = 'awaiting';
       })
       .addCase(editBlog.pending, (state) => {
         state.requestStatuts = 'loading';
       })
       .addCase(editBlog.fulfilled, (state, action) => {
         state.requestStatuts = 'idle';
+        state.blogStatus = 'edited';
         const index = state.blogs.findIndex(
           (blog) => blog.id === action.payload?.editedBlog.id
         );

@@ -1,4 +1,4 @@
-export type RequestStauts = 'idle' | 'loading' | 'success' | 'failed';
+export type RequestStauts = 'idle' | 'loading';
 export type BlogStatus = 'awaiting' | 'added' | 'deleted' | 'edited';
 export type Blog = {
   id?: number | undefined;
