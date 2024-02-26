@@ -32,8 +32,6 @@ export const BlogForm = () => {
     (state) => state.blogs.blogStatus
   );
 
-  console.log(blogStatus);
-
   const validate = (values: FormikCommonValues) => {
     const errors: FormikCommonValues = {};
     if (!values.author) {
@@ -65,7 +63,6 @@ export const BlogForm = () => {
     onSubmit: (values, onSubmitProps) => {
       dispatch(blogsThunks.postBlog({ ...values, image: newRandomImage }));
       onSubmitProps.resetForm();
-      console.log('ok');
     },
   });
 

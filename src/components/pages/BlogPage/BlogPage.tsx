@@ -10,13 +10,14 @@ import { useEffect } from 'react';
 
 const blogpage = {
   main_box: `h-full w-full flex justify-center items-start text-slate-600 bg-[#fafafa]`,
-  blog_box: `min-h-[400px] max-w-[600px] min-w-[300px] my-10 border border-orange-200 rounded-md shadow-lg  bg-[#fff]`,
+  blog_box: `min-h-[400px] max-w-[800px] min-w-[300px] my-10 border border-orange-200 rounded-md shadow-lg  bg-[#fff]`,
   header: `h-60 w-full flex justify-center items-center mt-4`,
   info_box: `min-h-40 h-40 w-60 flex flex-col justify-center`,
   img_box: `h-60 w-60 flex justify-center items-center`,
-  img: `h-[200px] w-[200px] rounded-full shadow-xl`,
-  title_box: `min-h-10 w-full flex justify-center items-center text-xl text-slate-700 font-bold p-2 `,
-  author_box: `min-h-10 w-full flex justify-center items-center italic text-md p-2 `,
+  img: `h-full w-full object-cover rounded-full shadow-xl`,
+  //img: `h-[200px] w-[200px] rounded-full shadow-xl`,
+  title_box: `min-h-10 w-full flex justify-sart items-center text-xl text-slate-700 font-bold p-2 `,
+  author_box: `min-h-10 w-full flex justify-start items-center italic text-md p-2 `,
   content_box: `text-justify tracking-normal mx-8 my-2 text-md leading-6 leading-loose`,
   footer: `w-full h-20  flex items-center justify-between`,
   thumb_box: `flex justify-around items-center w-32 ml-6`,

@@ -5,9 +5,9 @@ import { BlogCard } from './BlogCard/BlogCard';
 import { useEffect } from 'react';
 import { blogsActions } from '../../redux/slices/blogsSlice';
 
-const styles = {
-  main_box: `h-full w-full flex justify-center items-center`,
-  blogs: `h-full grid xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1  gap-10 mt-10`,
+const blogstyles = {
+  main_box: `h-full w-[100%] flex flex-col items-center`,
+  blogs: `h-full grid xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1  gap-x-12 gap-y-0`,
 };
 
 export const Blogs = () => {
@@ -15,8 +15,19 @@ export const Blogs = () => {
   useEffect(() => {
     dispatch(blogsActions.editBlogStatus({ status: 'awaiting' }));
   }, []);
+
   const blogs = useSelector<AppRootState, Blog[]>((state) => state.blogs.blogs);
-  const blogList = blogs.map((blog) => (
+  const currentPage = useSelector<AppRootState, number>(
+    (state) => state.blogs.currentPage
+  );
+  const blogsPerPage = useSelector<AppRootState, number>(
+    (state) => state.blogs.blogsPerPage
+  );
+
+  const lastBlogIndex = currentPage * blogsPerPage;
+  const firstBlogIndex = lastBlogIndex - blogsPerPage;
+  const currnetBlogs = blogs.slice(firstBlogIndex, lastBlogIndex);
+  const blogList = currnetBlogs.map((blog) => (
     <BlogCard
       key={blog.id}
       id={blog.id}
@@ -27,8 +38,8 @@ export const Blogs = () => {
     />
   ));
   return (
-    <div className={styles.main_box}>
-      <div className={styles.blogs}>{blogList}</div>
+    <div className={blogstyles.main_box}>
+      <div className={blogstyles.blogs}>{blogList}</div>
     </div>
   );
 };

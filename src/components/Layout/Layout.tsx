@@ -3,19 +3,26 @@ import { Navbar } from '../Navbar/Navbar';
 import { Footer } from '../Footer/Footer';
 
 const layout = {
-  container: `bg-[#fafafa] h-svh flex flex-col justify-between`,
-  layout_box: ``,
+  container: `bg-[#fafafa] min-h-screen flex flex-col justify-between`,
+  layout_box: `h-full w-full`,
 };
 
 export const Layout = () => {
   return (
     <div className={layout.container}>
-      <Navbar />
+      <div>
+        {' '}
+        <Navbar />
+      </div>
+
       <div className={layout.layout_box}>
         {' '}
         <Outlet />
       </div>
-      <Footer />
+      <div>
+        {' '}
+        <Footer />
+      </div>
     </div>
   );
 };

@@ -9,9 +9,10 @@ import { BlogForm } from './components/pages/BlogForm/BlogForm';
 import { NotFound } from './components/pages/NotFound/NotFound';
 import { Layout } from './components/Layout/Layout';
 import { BlogPage } from './components/pages/BlogPage/BlogPage';
-const styles = {
-  main: `flex justify-center `,
-  //container: `container flex bg-[#fafafa] min-h-screen`,
+import { EditBlogForm } from './components/pages/EditBlogForm/EditBlogForm';
+import { Home } from './components/pages/Home/Home';
+const app = {
+  main: `container mx-auto h-dvh bg-[#fafafa]`,
 };
 function App() {
   const dispatch = useAppDispatch();
@@ -20,12 +21,14 @@ function App() {
     dispatch(blogsThunks.fetchBlogs());
   }, []);
   return (
-    <div className={styles.main}>
+    <div className={app.main}>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Blogs />} />
-          <Route path="/blogform" element={<BlogForm />} />
-          <Route path="/blogpage" element={<BlogPage />} />
+          <Route index element={<Home />} />
+          <Route path="blogs" element={<Blogs />} />
+          <Route path="blogs/:id" element={<BlogPage />} />
+          <Route path="blogform" element={<BlogForm />} />
+          <Route path="editblogform/:id" element={<EditBlogForm />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

@@ -6,7 +6,7 @@ import defaultBlogImage from '../../../assets/images/blog_image/default_blog_img
 const blogcard = {
   blog_card: `relative w-80 h-[430px] bg-[#fff] border-zinc-600 shadow-lg rounded-md my-6 hover:shadow-zinc-400 text-slate-500`,
   img_box: `w-full h-[200px] bg-[#fff7ed]`,
-  img: `w-full h-[200px] rounded-t-md`,
+  img: `h-full w-full object-cover rounded-t-md`,
   info_box: `p-4 tracking-wide`,
   title_box: `text-md font-bold mb-2`,
   content_box: `line-clamp-3 text-left tracking-normal my-2 text-sm leading-6`,

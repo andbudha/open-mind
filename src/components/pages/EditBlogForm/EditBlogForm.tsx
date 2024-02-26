@@ -57,7 +57,6 @@ export const EditBlogForm = () => {
     validate,
     onSubmit: (values) => {
       dispatch(blogsThunks.editBlog(values));
-      console.log(values);
     },
   });
 
