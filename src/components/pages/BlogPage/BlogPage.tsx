@@ -11,13 +11,11 @@ import { useEffect } from 'react';
 const blogpage = {
   main_box: `h-full w-full flex justify-center items-start text-slate-600 bg-[#fafafa]`,
   blog_box: `min-h-[400px] max-w-[800px] min-w-[300px] my-10 border border-orange-200 rounded-md shadow-lg  bg-[#fff]`,
-  header: `h-60 w-full flex justify-center items-center mt-4`,
-  info_box: `min-h-40 h-40 w-60 flex flex-col justify-center`,
-  img_box: `h-60 w-60 flex justify-center items-center`,
-  img: `h-full w-full object-cover rounded-full shadow-xl`,
-  //img: `h-[200px] w-[200px] rounded-full shadow-xl`,
-  title_box: `min-h-10 w-full flex justify-sart items-center text-xl text-slate-700 font-bold p-2 `,
-  author_box: `min-h-10 w-full flex justify-start items-center italic text-md p-2 `,
+  img_box: `w-full flex justify-center items-center my-6`,
+  img: `h-64 w-[100%] object-cover rounded-md shadow-xl  mx-8`,
+  info_box: `min-h-30 w-full flex flex-col justify-center px-8 `,
+  title_box: `min-h-10 w-full flex justify-sart items-center text-xl text-slate-700 font-bold `,
+  author_box: `min-h-10 w-full flex justify-start items-center italic text-md`,
   content_box: `text-justify tracking-normal mx-8 my-2 text-md leading-6 leading-loose`,
   footer: `w-full h-20  flex items-center justify-between`,
   thumb_box: `flex justify-around items-center w-32 ml-6`,
@@ -54,14 +52,12 @@ export const BlogPage = () => {
     <div className={blogpage.main_box}>
       {requestStatuts === 'loading' && <Loader />}
       <div className={blogpage.blog_box}>
-        <div className={blogpage.header}>
-          <div className={blogpage.info_box}>
-            <div className={blogpage.title_box}>{blog?.title}</div>
-            <div className={blogpage.author_box}> by: {blog?.author}</div>
-          </div>
-          <div className={blogpage.img_box}>
-            <img className={blogpage.img} src={blog?.image} alt="blog-image" />
-          </div>
+        <div className={blogpage.img_box}>
+          <img className={blogpage.img} src={blog?.image} alt="blog-image" />
+        </div>
+        <div className={blogpage.info_box}>
+          <div className={blogpage.title_box}>{blog?.title}</div>
+          <div className={blogpage.author_box}> by: {blog?.author}</div>
         </div>
         <div className={blogpage.content_box}>{blog?.content}</div>
         <div className={blogpage.footer}>
