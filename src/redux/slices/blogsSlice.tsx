@@ -13,6 +13,8 @@ const initialState: InitialState = {
   randomBlogImage: '',
   requestStatuts: 'idle' as RequestStauts,
   blogStatus: 'awaiting' as BlogStatus,
+  currentPage: 1,
+  blogsPerPage: 6,
 };
 export const slice = createSlice({
   name: 'blogs',
@@ -20,6 +22,9 @@ export const slice = createSlice({
   reducers: {
     editBlogStatus: (state, action: PayloadAction<{ status: BlogStatus }>) => {
       state.blogStatus = action.payload.status;
+    },
+    setCurrentPage: (state, action: PayloadAction<{ currentPage: number }>) => {
+      state.currentPage = action.payload.currentPage;
     },
   },
   extraReducers: (builder) => {
@@ -99,7 +104,6 @@ const editBlog = createAsyncThunk('blogs/editBlog', async (blog: Blog) => {
   try {
     const res = await blogsAPI.editBlog(blog);
     const editedBlog = res.data;
-    console.log(res);
     return { editedBlog };
   } catch (error) {}
 });

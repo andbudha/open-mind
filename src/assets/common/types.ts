@@ -13,6 +13,8 @@ export type InitialState = {
   randomBlogImage: string;
   requestStatuts: RequestStauts;
   blogStatus: BlogStatus;
+  currentPage: number;
+  blogsPerPage: number;
 };
 
 export type FormikCommonValues = {
