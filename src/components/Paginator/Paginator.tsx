@@ -6,8 +6,8 @@ import { blogsActions } from '../../redux/slices/blogsSlice';
 const paginator = {
   main: `h-[50px] w-[100%] flex justify-center items-center bg-[#fafafa]`,
   btn_box: `h-[40px] min-w-[100px] flex justify-center items-center`,
-  btn: `h-[34px] mx-1 flex justify-center items-center w-[34px] rounded-full border text-orange-400 font-semibold border-orange-400 cursor-pointer  hover:bg-orange-400 hover:text-[#fff]`,
-  active_btn: `bg-orange-400 text-white border-slate-200`,
+  btn: `h-[34px] mx-1 flex justify-center items-center w-[34px] rounded-full border text-orange-400 font-semibold border-[#FBA834] cursor-pointer  hover:bg-[#FBA834] hover:text-[#fff]`,
+  active_btn: `bg-[#FBA834] text-white border-slate-200`,
 };
 export const Paginator = () => {
   const dispatch = useAppDispatch();
@@ -42,7 +42,7 @@ export const Paginator = () => {
   ));
   return (
     <div className={paginator.main}>
-      <div className={paginator.btn_box}>{pageBtn}</div>
+      {pages.length > 1 && <div className={paginator.btn_box}>{pageBtn}</div>}
     </div>
   );
 };
