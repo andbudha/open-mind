@@ -7,6 +7,8 @@ import {
 } from '../../assets/common/types';
 import { blogsAPI } from '../../assets/api/blogsAPI';
 import { randomImageAPI } from '../../assets/api/randomImageAPI';
+import { toastError } from '../../assets/utils/toastError';
+import { errorMessage } from '../../assets/utils/errorMessage';
 
 const initialState: InitialState = {
   blogs: [] as Blog[],
@@ -25,6 +27,10 @@ export const slice = createSlice({
     },
     setCurrentPage: (state, action: PayloadAction<{ currentPage: number }>) => {
       state.currentPage = action.payload.currentPage;
+    },
+    setError: (_, action: PayloadAction<{ value: string }>) => {
+      //toastError(action.payload.value);
+      console.log(action.payload.value);
     },
   },
   extraReducers: (builder) => {
@@ -76,47 +82,71 @@ const fetchImage = createAsyncThunk(
     try {
       const res = await randomImageAPI.fetchImage(term);
       const newRandomImage =
-        res.data.results[Math.floor(Math.random() * 10)].urls.small;
+        res.data.results[Math.floor(Math.random() * 10)].urls.regular;
       console.log(newRandomImage);
       return { newRandomImage };
     } catch (error) {}
   }
 );
-const fetchBlogs = createAsyncThunk('blogs/fetchBlogs', async () => {
+const fetchBlogs = createAsyncThunk('blogs/fetchBlogs', async (_, thunkAPI) => {
+  const { dispatch } = thunkAPI;
   try {
     const res = await blogsAPI.fetchBlogs();
     const blogs = res.data;
-    console.log(blogs);
     return { blogs };
-  } catch (error) {}
+  } catch (error: unknown) {
+    const errMsg: string = errorMessage(error);
+    dispatch(blogsActions.setError({ value: errMsg }));
+  }
 });
 
-const postBlog = createAsyncThunk('blogs/postBlog', async (blog: Blog) => {
-  try {
-    const res = await blogsAPI.postBlog(blog);
-    const newBlog = res.data;
-    console.log(newBlog);
-    return { newBlog };
-  } catch (error) {}
-});
+const postBlog = createAsyncThunk(
+  'blogs/postBlog',
+  async (blog: Blog, thunkAPI) => {
+    const { dispatch } = thunkAPI;
+    try {
+      const res = await blogsAPI.postBlog(blog);
+      const newBlog = res.data;
+      console.log(newBlog);
+      return { newBlog };
+    } catch (error: unknown) {
+      const errMsg: string = errorMessage(error);
+      dispatch(blogsActions.setError({ value: errMsg }));
+    }
+  }
+);
 
-const editBlog = createAsyncThunk('blogs/editBlog', async (blog: Blog) => {
-  try {
-    const res = await blogsAPI.editBlog(blog);
-    const editedBlog = res.data;
-    return { editedBlog };
-  } catch (error) {}
-});
+const editBlog = createAsyncThunk(
+  'blogs/editBlog',
+  async (blog: Blog, thunkAPI) => {
+    const { dispatch } = thunkAPI;
+    try {
+      const res = await blogsAPI.editBlog(blog);
+      const editedBlog = res.data;
+      return { editedBlog };
+    } catch (error: unknown) {
+      const errMsg: string = errorMessage(error);
+      dispatch(blogsActions.setError({ value: errMsg }));
+    }
+  }
+);
 
-const deleteBlog = createAsyncThunk('blogs/deletBlog', async (id: number) => {
-  try {
-    const res = await blogsAPI.deleteBlog(id);
-    const status = res.status;
-    console.log(status);
+const deleteBlog = createAsyncThunk(
+  'blogs/deletBlog',
+  async (id: number, thunkAPI) => {
+    const { dispatch } = thunkAPI;
+    try {
+      const res = await blogsAPI.deleteBlog(id);
+      const status = res.status;
 
-    return { id, status };
-  } catch (error) {}
-});
+      return { id, status };
+    } catch (error: unknown) {
+      const errMsg: string = errorMessage(error);
+      dispatch(blogsActions.setError({ value: errMsg }));
+    }
+  }
+);
+
 export const blogs = slice.reducer;
 export const blogsActions = slice.actions;
 export const blogsThunks = {
