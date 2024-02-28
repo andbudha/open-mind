@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import './App.css';
 import { Blogs } from './components/Blogs/Blogs';
-
 import { useAppDispatch } from './redux/store';
 import { blogsThunks } from './redux/slices/blogsSlice';
 import { Route, Routes } from 'react-router-dom';
@@ -11,6 +10,7 @@ import { Layout } from './components/Layout/Layout';
 import { BlogPage } from './components/pages/BlogPage/BlogPage';
 import { EditBlogForm } from './components/pages/EditBlogForm/EditBlogForm';
 import { Home } from './components/pages/Home/Home';
+import { Toaster } from 'react-hot-toast';
 const app = {
   main: `container mx-auto h-dvh bg-[#fafafa]`,
 };
@@ -22,13 +22,14 @@ function App() {
   }, []);
   return (
     <div className={app.main}>
+      <Toaster />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="blogs" element={<Blogs />} />
           <Route path="blogs/:id" element={<BlogPage />} />
-          <Route path="blogform" element={<BlogForm />} />
-          <Route path="editblogform/:id" element={<EditBlogForm />} />
+          <Route path="blogs/blogform" element={<BlogForm />} />
+          <Route path="blogs/:id/editblogform" element={<EditBlogForm />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

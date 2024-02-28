@@ -7,8 +7,8 @@ import {
 } from '../../assets/common/types';
 import { blogsAPI } from '../../assets/api/blogsAPI';
 import { randomImageAPI } from '../../assets/api/randomImageAPI';
-import { toastError } from '../../assets/utils/toastError';
 import { errorMessage } from '../../assets/utils/errorMessage';
+import { toastError } from '../../assets/utils/toastError';
 
 const initialState: InitialState = {
   blogs: [] as Blog[],
@@ -28,9 +28,9 @@ export const slice = createSlice({
     setCurrentPage: (state, action: PayloadAction<{ currentPage: number }>) => {
       state.currentPage = action.payload.currentPage;
     },
-    setError: (_, action: PayloadAction<{ value: string }>) => {
-      //toastError(action.payload.value);
-      console.log(action.payload.value);
+    setError: (state, action: PayloadAction<{ value: string }>) => {
+      toastError(action.payload.value);
+      state.requestStatuts = 'idle';
     },
   },
   extraReducers: (builder) => {
