@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 import { LuThumbsUp, LuThumbsDown } from 'react-icons/lu';
 import { blogsActions, blogsThunks } from '../../../redux/slices/blogsSlice';
 import { Loader } from '../../Loader/Loader';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const blogpage = {
   main_box: `h-full w-full flex justify-center items-start text-slate-600 bg-[#fafafa]`,
@@ -20,10 +20,10 @@ const blogpage = {
   footer: `w-full h-20  flex items-center justify-between`,
   thumb_box: `flex justify-around items-center w-32 ml-6`,
   thumb_icon_box: `flex justify-around items-center w-12 h-8`,
-  thumb_icon: `text-[#FC6736] cursor-pointer`,
+  thumb_icon: `text-[#FBA834] cursor-pointer`,
   likes: `text-sm`,
   btn_box: `w-48 flex justify-between tracking-normal text-sm mr-6`,
-  btn: `h-7 w-22 border border-orange-400 rounded-full text-[#FC6736] flex justify-center px-3 items-center cursor-pointer transition ease-in-out hover:-translate hover:scale-105 hover: duration-300 hover:bg-orange-400 hover:text-[#fff]`,
+  btn: `h-7 w-22 border border-[#FBA834] rounded-full text-[#FBA834] flex justify-center px-3 items-center cursor-pointer transition ease-in-out hover:-translate hover:scale-105 hover: duration-300 hover:bg-[#FBA834] hover:text-[#fff]`,
   reader_icon: `h-7 w-7`,
 };
 
@@ -45,6 +45,10 @@ export const BlogPage = () => {
     dispatch(blogsThunks.deleteBlog(Number(id)));
   };
 
+  const likeOnClick = (blog: Blog | undefined) => {
+    console.log('ok');
+  };
+
   if (postStatus === 'deleted') {
     return <Navigate to={'/'} />;
   }
@@ -63,17 +67,20 @@ export const BlogPage = () => {
         <div className={blogpage.footer}>
           <div className={blogpage.thumb_box}>
             <div className={blogpage.thumb_icon_box}>
-              <LuThumbsUp className={blogpage.thumb_icon} />
-              <div className={blogpage.likes}>{190}</div>
+              <LuThumbsUp
+                className={blogpage.thumb_icon}
+                onClick={() => likeOnClick(blog)}
+              />
+              <div className={blogpage.likes}>{blog?.rating?.likes}</div>
             </div>
             <div className={blogpage.thumb_icon_box}>
               <LuThumbsDown className={blogpage.thumb_icon} />
-              <div className={blogpage.likes}>{120}</div>
+              <div className={blogpage.likes}>{blog?.rating?.dislikes}</div>
             </div>
           </div>
 
           <div className={blogpage.btn_box}>
-            <NavLink to={`/editblogform/${blog?.id}`}>
+            <NavLink to={`/blogs/${blog?.id}/editblogform`}>
               <div className={blogpage.btn}>edit post</div>
             </NavLink>
             <div className={blogpage.btn} onClick={deleteOnClick}>

@@ -18,4 +18,7 @@ export const blogsAPI = {
   deleteBlog: (id: number) => {
     return instance.delete(`/${id}`);
   },
+  increaseLikes: (blog: Blog | undefined) => {
+    return instance.patch(`/${blog?.id}`, { ...blog });
+  },
 };

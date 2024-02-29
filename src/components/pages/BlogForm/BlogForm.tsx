@@ -58,10 +58,16 @@ export const BlogForm = () => {
       title: '',
       image: '',
       content: '',
+      rating: {
+        likes: 0,
+        dislikes: 0,
+      },
     },
     validate,
     onSubmit: (values, onSubmitProps) => {
       dispatch(blogsThunks.postBlog({ ...values, image: newRandomImage }));
+      console.log(values);
+
       onSubmitProps.resetForm();
     },
   });

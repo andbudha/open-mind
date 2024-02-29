@@ -1,5 +1,5 @@
 const footer = {
-  main: `h-[70px] min-w-screen  bg-[#f3f4f6] flex justify-center items-center italic tracking-wider text-[#FC6736]`,
+  main: `h-[70px] min-w-screen  bg-[#f3f4f6] flex justify-center items-center italic tracking-wider text-[#FBA834]`,
 };
 export const Footer = () => {
   return (

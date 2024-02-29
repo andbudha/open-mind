@@ -31,7 +31,7 @@ export const Navbar = () => {
           <div>home</div> <AiOutlineHome className={navbar.icon} />
         </NavLink>
         <NavLink
-          to="blogform"
+          to="blogs/blogform"
           className={`${navbar.btn}`}
           style={({ isActive }) => ({
             background: isActive ? '#FBA834' : '',

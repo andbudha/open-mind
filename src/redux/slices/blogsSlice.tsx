@@ -35,13 +35,17 @@ export const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(fetchImage.fulfilled, (state, action) => {
+        state.randomBlogImage = action.payload?.newRandomImage;
+      })
+      .addCase(fetchBlogs.pending, (state) => {
+        state.requestStatuts = 'loading';
+      })
       .addCase(fetchBlogs.fulfilled, (state, action) => {
+        state.requestStatuts = 'idle';
         if (action.payload?.blogs) {
           state.blogs = action.payload?.blogs;
         }
-      })
-      .addCase(fetchImage.fulfilled, (state, action) => {
-        state.randomBlogImage = action.payload?.newRandomImage;
       })
       .addCase(postBlog.pending, (state) => {
         state.requestStatuts = 'loading';
