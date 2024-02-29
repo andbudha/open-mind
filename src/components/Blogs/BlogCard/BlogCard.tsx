@@ -5,8 +5,8 @@ import defaultBlogImage from '../../../assets/images/blog_image/default_blog_img
 
 const blogcard = {
   blog_card: `relative w-80 h-[430px] bg-[#fff] border-zinc-600 shadow-lg rounded-md my-6 hover:shadow-zinc-400 text-slate-500`,
-  img_box: `w-full h-[200px] bg-[#fff7ed]`,
-  img: `h-full w-full object-cover rounded-t-md`,
+  img_box: `relative w-full h-[200px] bg-[#fff] rounded-md`,
+  img: `absolute h-full w-full object-cover p-3 rounded`,
   info_box: `p-4 tracking-wide`,
   title_box: `text-md font-bold mb-2`,
   content_box: `line-clamp-3 text-left tracking-normal my-2 text-sm leading-6`,
@@ -14,10 +14,10 @@ const blogcard = {
   footer: `absolute bottom-0 w-72 h-14 flex items-center justify-between`,
   thumb_box: `flex justify-around items-center w-32`,
   thumb_icon_box: `flex justify-around items-center w-12 h-8`,
-  thumb_icon: `text-[#FC6736]`,
+  thumb_icon: `text-[#FBA834]`,
   likes: `text-sm`,
   btn_box: ` tracking-normal text-sm `,
-  btn: `h-7 w-16 border border-orange-400 rounded-full text-[#FC6736] flex justify-center px-3 items-center cursor-pointer transition ease-in-out hover:-translate hover:scale-105 hover: duration-300 hover:bg-orange-400 hover:text-[#fff]`,
+  btn: `h-7 w-16 border border-[#FBA834] rounded-full text-[#FBA834] flex justify-center px-3 items-center cursor-pointer transition ease-in-out hover:-translate hover:scale-105 hover: duration-300 hover:bg-[#FBA834] hover:text-[#fff]`,
   reader_icon: `h-7 w-7`,
 };
 type BlogCard = {
@@ -26,8 +26,18 @@ type BlogCard = {
   content: string | undefined;
   author: string | undefined;
   image: string | undefined;
+  likes: number | undefined;
+  dislikes: number | undefined;
 };
-export const BlogCard = ({ id, title, content, author, image }: BlogCard) => {
+export const BlogCard = ({
+  id,
+  title,
+  content,
+  author,
+  image,
+  likes,
+  dislikes,
+}: BlogCard) => {
   const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
   let blogImage;
   if (image) {
@@ -47,11 +57,11 @@ export const BlogCard = ({ id, title, content, author, image }: BlogCard) => {
           <div className={blogcard.thumb_box}>
             <div className={blogcard.thumb_icon_box}>
               <LuThumbsUp className={blogcard.thumb_icon} />
-              <div className={blogcard.likes}>{190}</div>
+              <div className={blogcard.likes}>{likes}</div>
             </div>
             <div className={blogcard.thumb_icon_box}>
               <LuThumbsDown className={blogcard.thumb_icon} />
-              <div className={blogcard.likes}>{120}</div>
+              <div className={blogcard.likes}>{dislikes}</div>
             </div>
           </div>
           <NavLink to={`/blogs/${id}`}>
