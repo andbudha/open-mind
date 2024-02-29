@@ -19,7 +19,6 @@ export const Blogs = () => {
   const requestStatus = useSelector<AppRootState, string>(
     (state) => state.blogs.requestStatuts
   );
-  console.log(requestStatus);
 
   const blogs = useSelector<AppRootState, Blog[]>((state) => state.blogs.blogs);
   const currentPage = useSelector<AppRootState, number>(
