@@ -43,7 +43,7 @@ export const Blogs = () => {
       dislikes={blog.rating?.dislikes}
     />
   ));
-  const skeletonList = [...new Array(6)].map(() => <Skeleton />);
+  const skeletonList = [...new Array(6)].map((_, i) => <Skeleton key={i} />);
   return (
     <div className={blogstyles.main_box}>
       <div className={blogstyles.blogs}>

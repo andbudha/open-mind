@@ -13,14 +13,18 @@ const login = {
   register_link: `text-orange-600 underline`,
 };
 
-export type LoginCommonValues = {
+export type LoginValues = {
+  email: string;
+  password: string;
+};
+
+export type LoginErrorValues = {
   email?: string;
   password?: string;
 };
-
 export const Login = () => {
-  const validate = (values: LoginCommonValues) => {
-    const errors: LoginCommonValues = {};
+  const validate = (values: LoginValues) => {
+    const errors: LoginErrorValues = {};
 
     if (!values.email) {
       errors.email = 'Email is required';
@@ -44,7 +48,7 @@ export const Login = () => {
       password: '',
     },
     validate,
-    onSubmit: (values: LoginCommonValues, onSubmitProps) => {
+    onSubmit: (values: LoginValues, onSubmitProps) => {
       console.log(values);
       onSubmitProps.resetForm();
     },
