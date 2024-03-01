@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import { blogs } from './slices/blogsSlice';
+import { auth } from './slices/authSlice';
 
 export const store = configureStore({
   reducer: {
     blogs: blogs,
+    auth: auth,
   },
 });
 
