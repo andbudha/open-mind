@@ -10,7 +10,7 @@ const register = {
   register_btn: `flex justify-center items-center tracking-wider  h-[30px] w-[80%] text-[#FC6736] border-[1px] border-orange-400 my-6 p-2 rounded transition ease-in-out  hover: duration-300 hover:bg-orange-400 hover:text-[#fff]`,
 };
 
-type RegisterValues = {
+export type RegisterValues = {
   firstName: string;
   secondName: string;
   email: string;
