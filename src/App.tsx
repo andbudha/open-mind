@@ -12,7 +12,7 @@ import { EditBlogForm } from './components/pages/EditBlogForm/EditBlogForm';
 import { Home } from './components/pages/Home/Home';
 import { Toaster } from 'react-hot-toast';
 import { Login } from './components/pages/Login/Login';
-import { RegisterPage } from './components/pages/Register/RegisterPage';
+import { Register } from './components/pages/Register/Register';
 const app = {
   main: `container mx-auto h-dvh bg-[#fafafa]`,
 };
@@ -33,7 +33,7 @@ function App() {
           <Route path="blogs/blogform" element={<BlogForm />} />
           <Route path="blogs/:id/editblogform" element={<EditBlogForm />} />
           <Route path="login" element={<Login />} />
-          <Route path="login/register" element={<RegisterPage />} />
+          <Route path="login/register" element={<Register />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
