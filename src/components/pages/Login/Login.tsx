@@ -1,5 +1,9 @@
 import { useFormik } from 'formik';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Navigate } from 'react-router-dom';
+import { AppRootState, useAppDispatch } from '../../../redux/store';
+import { AuthRequestStatus, authThunks } from '../../../redux/slices/authSlice';
+import { useSelector } from 'react-redux';
+import { Loader } from '../../Loader/Loader';
 
 const login = {
   main_box: `h-full w-full flex justify-center items-center tracking-wider`,
@@ -23,6 +27,13 @@ export type LoginErrorValues = {
   password?: string;
 };
 export const Login = () => {
+  const dispatch = useAppDispatch();
+  const authorized = useSelector<AppRootState, boolean>(
+    (state) => state.auth.authorized
+  );
+  const authRequestStatus = useSelector<AppRootState, AuthRequestStatus>(
+    (state) => state.auth.authRequestStatus
+  );
   const validate = (values: LoginValues) => {
     const errors: LoginErrorValues = {};
 
@@ -49,12 +60,19 @@ export const Login = () => {
     },
     validate,
     onSubmit: (values: LoginValues, onSubmitProps) => {
-      console.log(values);
-      onSubmitProps.resetForm();
+      dispatch(authThunks.logMeIn(values));
+      if (authorized) {
+        onSubmitProps.resetForm();
+      }
     },
   });
+
+  if (authorized) {
+    return <Navigate to={'/'} />;
+  }
   return (
     <div className={login.main_box}>
+      {authRequestStatus === 'loading' && <Loader />}
       <div className={login.form_box}>
         <form className={login.form} onSubmit={formik.handleSubmit}>
           <div className={login.input_box}>

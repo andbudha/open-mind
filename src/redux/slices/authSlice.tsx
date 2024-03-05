@@ -3,21 +3,22 @@ import { RegisterValues } from '../../components/pages/Register/Register';
 import { authAPI } from '../../assets/api/authAPI';
 import { LoginValues } from '../../components/pages/Login/Login';
 
-type Users = {
+export type Users = {
   firstName: string;
   secondName: string;
   email: string;
   password: string;
   id?: number;
 };
+export type AuthRequestStatus = 'idle' | 'loading';
 type AuthInitialState = {
   authorized: boolean;
-  loggedIn: boolean;
+  authRequestStatus: AuthRequestStatus;
   users: Users[];
 };
 const initialState: AuthInitialState = {
   authorized: false,
-  loggedIn: false,
+  authRequestStatus: 'idle' as AuthRequestStatus,
   users: [] as Users[],
 };
 
@@ -25,7 +26,15 @@ const slice = createSlice({
   name: 'auth',
   initialState,
   reducers: {},
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(logMeIn.pending, (state) => {
+        state.authRequestStatus = 'loading';
+      })
+      .addCase(logMeIn.fulfilled, (state) => {
+        state.authorized = true;
+      });
+  },
 });
 
 const getUsers = createAsyncThunk('auth/getUsers', async () => {
