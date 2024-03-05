@@ -1,7 +1,9 @@
 import { AiOutlineHome, AiOutlineLogin, AiOutlineLogout } from 'react-icons/ai';
 import { LuPenSquare } from 'react-icons/lu';
+import { useSelector } from 'react-redux';
 
 import { NavLink } from 'react-router-dom';
+import { AppRootState } from '../../redux/store';
 
 const navbar = {
   main: `h-24 w-full bg-[#f3f4f6] flex justify-between items-center`,
@@ -12,6 +14,9 @@ const navbar = {
   icon: `ml-2 h-5 w-5`,
 };
 export const Navbar = () => {
+  const authorized = useSelector<AppRootState, boolean>(
+    (state) => state.auth.authorized
+  );
   return (
     <div className={navbar.main}>
       <div className={navbar.logo_box}>
@@ -20,38 +25,56 @@ export const Navbar = () => {
         </NavLink>
       </div>
       <div className={navbar.btn_box}>
-        <NavLink
-          to="/"
-          className={`${navbar.btn}`}
-          style={({ isActive }) => ({
-            background: isActive ? '#FBA834' : '',
-            color: isActive ? '#fff' : '',
-          })}
-        >
-          <div>home</div> <AiOutlineHome className={navbar.icon} />
-        </NavLink>
-        <NavLink
-          to="blogs/blogform"
-          className={`${navbar.btn}`}
-          style={({ isActive }) => ({
-            background: isActive ? '#FBA834' : '',
-            color: isActive ? '#fff' : '',
-          })}
-        >
-          <div>add blog </div>
-          <LuPenSquare className={navbar.icon} />
-        </NavLink>
-        <NavLink
-          to="login"
-          className={navbar.btn}
-          style={({ isActive }) => ({
-            background: isActive ? '#FBA834' : '',
-            color: isActive ? '#fff' : '',
-          })}
-        >
-          <div>log in</div>
-          <AiOutlineLogin className={navbar.icon} />
-        </NavLink>
+        {authorized && (
+          <NavLink
+            to="/"
+            className={`${navbar.btn}`}
+            style={({ isActive }) => ({
+              background: isActive ? '#FBA834' : '',
+              color: isActive ? '#fff' : '',
+            })}
+          >
+            <div>home</div> <AiOutlineHome className={navbar.icon} />
+          </NavLink>
+        )}
+        {authorized && (
+          <NavLink
+            to="blogs/blogform"
+            className={`${navbar.btn}`}
+            style={({ isActive }) => ({
+              background: isActive ? '#FBA834' : '',
+              color: isActive ? '#fff' : '',
+            })}
+          >
+            <div>add blog </div>
+            <LuPenSquare className={navbar.icon} />
+          </NavLink>
+        )}
+        {authorized ? (
+          <NavLink
+            to="login"
+            className={navbar.btn}
+            style={({ isActive }) => ({
+              background: isActive ? '#FBA834' : '',
+              color: isActive ? '#fff' : '',
+            })}
+          >
+            <div>log out</div>
+            <AiOutlineLogout className={navbar.icon} />
+          </NavLink>
+        ) : (
+          <NavLink
+            to="login"
+            className={navbar.btn}
+            style={({ isActive }) => ({
+              background: isActive ? '#FBA834' : '',
+              color: isActive ? '#fff' : '',
+            })}
+          >
+            <div>log in</div>
+            <AiOutlineLogin className={navbar.icon} />
+          </NavLink>
+        )}
       </div>
     </div>
   );
