@@ -1,7 +1,7 @@
 import styles from './Loader.module.css';
 
 const loader = {
-  main: `absolute h-full w-full bg-transparent flex justify-center items-center opacity-100 `,
+  main: `absolute h-full w-full bg-transparent flex justify-center items-center opacity-100`,
 };
 export const Loader = () => {
   return (
