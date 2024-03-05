@@ -13,6 +13,7 @@ import { Home } from './components/pages/Home/Home';
 import { Toaster } from 'react-hot-toast';
 import { Login } from './components/pages/Login/Login';
 import { Register } from './components/pages/Register/Register';
+import { authThunks } from './redux/slices/authSlice';
 const app = {
   main: `container mx-auto h-dvh bg-[#fafafa]`,
 };
@@ -21,6 +22,7 @@ function App() {
 
   useEffect(() => {
     dispatch(blogsThunks.fetchBlogs());
+    dispatch(authThunks.getUsers());
   }, []);
   return (
     <div className={app.main}>

@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RegisterValues } from '../../components/pages/Register/Register';
 import { authAPI } from '../../assets/api/authAPI';
 import { LoginValues } from '../../components/pages/Login/Login';
@@ -25,7 +25,17 @@ const initialState: AuthInitialState = {
 const slice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    logOut: (state) => {
+      state.authorized = false;
+    },
+    setAuthRequestStatus: (
+      state,
+      action: PayloadAction<{ status: 'idle' }>
+    ) => {
+      state.authRequestStatus = action.payload.status;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(logMeIn.pending, (state) => {
@@ -62,5 +72,5 @@ const logMeIn = createAsyncThunk(
   }
 );
 export const auth = slice.reducer;
-export const authACtions = slice.actions;
+export const authActions = slice.actions;
 export const authThunks = { addUser, getUsers, logMeIn };

@@ -6,11 +6,14 @@ const instance = axios.create({
   baseURL: 'https://1d811849dfc8e7d5.mokky.dev',
 });
 
-export const authmeAPI = {
+export const authAPI = {
+  getUsers: () => {
+    return instance.get('/users');
+  },
   logMeIn: (loginValues: LoginValues) => {
     return instance.post('/auth', { ...loginValues });
   },
-  registerMe: (registerValues: RegisterValues) => {
-    return instance.post('/register', { ...registerValues });
+  registerMe: (newUser: RegisterValues) => {
+    return instance.post('/register', { ...newUser });
   },
 };

@@ -3,7 +3,8 @@ import { LuPenSquare } from 'react-icons/lu';
 import { useSelector } from 'react-redux';
 
 import { NavLink } from 'react-router-dom';
-import { AppRootState } from '../../redux/store';
+import { AppRootState, useAppDispatch } from '../../redux/store';
+import { authActions } from '../../redux/slices/authSlice';
 
 const navbar = {
   main: `h-24 w-full bg-[#f3f4f6] flex justify-between items-center`,
@@ -14,9 +15,14 @@ const navbar = {
   icon: `ml-2 h-5 w-5`,
 };
 export const Navbar = () => {
+  const dispatch = useAppDispatch();
   const authorized = useSelector<AppRootState, boolean>(
     (state) => state.auth.authorized
   );
+
+  const logOutHandler = () => {
+    dispatch(authActions.logOut());
+  };
   return (
     <div className={navbar.main}>
       <div className={navbar.logo_box}>
@@ -52,6 +58,7 @@ export const Navbar = () => {
         )}
         {authorized ? (
           <NavLink
+            onClick={logOutHandler}
             to="login"
             className={navbar.btn}
             style={({ isActive }) => ({

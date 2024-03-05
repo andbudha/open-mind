@@ -1,4 +1,6 @@
 import { useFormik } from 'formik';
+import { useAppDispatch } from '../../../redux/store';
+import { authThunks } from '../../../redux/slices/authSlice';
 
 const register = {
   main_box: `h-full w-full flex justify-center items-center tracking-wider`,
@@ -15,6 +17,7 @@ export type RegisterValues = {
   secondName: string;
   email: string;
   password: string;
+  id?: number;
 };
 
 type RegisterErrorValues = {
@@ -25,6 +28,7 @@ type RegisterErrorValues = {
 };
 
 export const Register = () => {
+  const dispatch = useAppDispatch();
   const validate = (values: RegisterValues) => {
     const errors: RegisterErrorValues = {};
     if (!values.firstName) {
@@ -58,6 +62,7 @@ export const Register = () => {
     },
     validate,
     onSubmit: (values: RegisterValues, onSubmitProps) => {
+      dispatch(authThunks.addUser(values));
       console.log(values);
       onSubmitProps.resetForm();
     },
