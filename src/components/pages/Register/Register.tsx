@@ -1,15 +1,18 @@
 import { useFormik } from 'formik';
 import { useAppDispatch } from '../../../redux/store';
 import { authThunks } from '../../../redux/slices/authSlice';
+import { NavLink } from 'react-router-dom';
 
 const register = {
   main_box: `h-full w-full flex justify-center items-center tracking-wider`,
-  form_box: `flex flex-col justify-around items-center w-[340px] h-[380px] shadow-md border border-orange-400 rounded-md`,
-  form: `flex flex-col justify-center items-center min-w-[320px] h-[150px]`,
+  form_box: `flex flex-col justify-center items-center w-[340px] min-h-[400px] shadow-md border border-orange-400 rounded-md`,
+  form: `flex flex-col justify-center items-center min-w-[320px] min-h-[300px]`,
   input: `text-sm tracking-wider h-[30px] w-[100%] border-[1px] border-orange-400 my-2 p-2 rounded focus:outline-none focus:ring-1 ring-orange-500 focus:border-orange-500`,
   input_box: `w-[80%]`,
   error_message: `text-xs text-red-500 font-medium	`,
-  register_btn: `flex justify-center items-center tracking-wider  h-[30px] w-[80%] text-[#FC6736] border-[1px] border-orange-400 my-6 p-2 rounded transition ease-in-out  hover: duration-300 hover:bg-orange-400 hover:text-[#fff]`,
+  register_btn: `flex justify-center items-center tracking-wider  h-[30px] w-[80%] text-[#FC6736] border-[1px] border-orange-400 my-2 p-2 rounded transition ease-in-out  hover: duration-300 hover:bg-orange-400 hover:text-[#fff]`,
+  info_box: `h-auto w-[75%] text-sm text-orange-600 my-2`,
+  register_link: `text-orange-600 underline`,
 };
 
 export type RegisterValues = {
@@ -142,6 +145,17 @@ export const Register = () => {
             Register
           </button>
         </form>
+        <div className={register.info_box}>
+          <p>
+            If you have an account, you can log in{' '}
+            <span>
+              <NavLink to={'/login'} className={register.register_link}>
+                here
+              </NavLink>{' '}
+            </span>
+            .
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,4 @@
-import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router';
-import { AppRootState, useAppDispatch } from '../../../redux/store';
+import { useAppDispatch } from '../../../redux/store';
 import { Blogs } from '../../Blogs/Blogs';
 import { Paginator } from '../../Paginator/Paginator';
 import { useEffect } from 'react';
@@ -16,13 +14,6 @@ export const Home = () => {
   useEffect(() => {
     dispatch(authActions.setAuthRequestStatus({ status: 'idle' }));
   }, []);
-  const authorized = useSelector<AppRootState, boolean>(
-    (state) => state.auth.authorized
-  );
-
-  if (!authorized) {
-    return <Navigate to="login" />;
-  }
 
   return (
     <div className={home.main}>
