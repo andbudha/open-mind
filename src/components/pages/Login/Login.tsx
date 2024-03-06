@@ -1,9 +1,15 @@
 import { useFormik } from 'formik';
 import { NavLink, Navigate } from 'react-router-dom';
 import { AppRootState, useAppDispatch } from '../../../redux/store';
-import { AuthRequestStatus, authThunks } from '../../../redux/slices/authSlice';
+import { authActions, authThunks } from '../../../redux/slices/authSlice';
 import { useSelector } from 'react-redux';
 import { Loader } from '../../Loader/Loader';
+import { useEffect } from 'react';
+import { AuthRequestStatus } from '../../../assets/types/auth_types';
+import {
+  LoginValues,
+  LoginErrorValues,
+} from '../../../assets/types/formik_types';
 
 const login = {
   main_box: `h-full w-full flex justify-center items-center tracking-wider`,
@@ -17,17 +23,11 @@ const login = {
   register_link: `text-orange-600 underline`,
 };
 
-export type LoginValues = {
-  email: string;
-  password: string;
-};
-
-export type LoginErrorValues = {
-  email?: string;
-  password?: string;
-};
 export const Login = () => {
   const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(authActions.setRegisterStatus({ status: false }));
+  }, []);
   const authorized = useSelector<AppRootState, boolean>(
     (state) => state.auth.authorized
   );

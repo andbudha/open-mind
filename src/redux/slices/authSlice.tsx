@@ -1,24 +1,25 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { RegisterValues } from '../../components/pages/Register/Register';
 import { authAPI } from '../../assets/api/authAPI';
-import { LoginValues } from '../../components/pages/Login/Login';
+import { toastError } from '../../assets/utils/toastError';
+import { toastSuccess } from '../../assets/utils/toastSuccess';
+import { errorMessage } from '../../assets/utils/errorMessage';
+import {
+  AuthInitialState,
+  AuthRequestStatus,
+  LoggedInResponse,
+  RegisterResponse,
+  Users,
+} from '../../assets/types/auth_types';
+import {
+  UserRegisterValues,
+  LoginValues,
+} from '../../assets/types/formik_types';
 
-export type Users = {
-  firstName: string;
-  secondName: string;
-  email: string;
-  password: string;
-  id?: number;
-};
-export type AuthRequestStatus = 'idle' | 'loading';
-type AuthInitialState = {
-  authorized: boolean;
-  authRequestStatus: AuthRequestStatus;
-  users: Users[];
-};
 const initialState: AuthInitialState = {
   authorized: false,
+  registered: false,
   authRequestStatus: 'idle' as AuthRequestStatus,
+  error: null,
   users: [] as Users[],
 };
 
@@ -29,11 +30,21 @@ const slice = createSlice({
     logOut: (state) => {
       state.authorized = false;
     },
-    setAuthRequestStatus: (
+    setRequestStatus: (
       state,
-      action: PayloadAction<{ status: 'idle' }>
+      action: PayloadAction<{ status: AuthRequestStatus }>
     ) => {
       state.authRequestStatus = action.payload.status;
+    },
+    setError: (_, action: PayloadAction<{ error: string }>) => {
+      if (action.payload.error === 'Unauthorized') {
+        toastError(`${action.payload.error}. Invalid email or password!`);
+      } else {
+        toastError(action.payload.error);
+      }
+    },
+    setRegisterStatus: (state, action: PayloadAction<{ status: boolean }>) => {
+      state.registered = action.payload.status;
     },
   },
   extraReducers: (builder) => {
@@ -41,8 +52,21 @@ const slice = createSlice({
       .addCase(logMeIn.pending, (state) => {
         state.authRequestStatus = 'loading';
       })
-      .addCase(logMeIn.fulfilled, (state) => {
-        state.authorized = true;
+      .addCase(logMeIn.fulfilled, (state, action) => {
+        if (action.payload?.data && action.payload?.data.token) {
+          state.authorized = true;
+        }
+      })
+      .addCase(registerUser.pending, (state) => {
+        state.authRequestStatus = 'loading';
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        if (action.payload?.data) {
+          toastSuccess(
+            'You have successfully registered. Proceed to logging in now!'
+          );
+        }
+        state.authRequestStatus = 'idle';
       });
   },
 });
@@ -50,27 +74,45 @@ const slice = createSlice({
 const getUsers = createAsyncThunk('auth/getUsers', async () => {
   try {
     const res = await authAPI.getUsers();
-    console.log(res.data);
+    const users: Users[] = res.data;
+    console.log(users);
   } catch (error) {}
 });
-const addUser = createAsyncThunk(
-  'auth/addUser',
-  async (newUser: RegisterValues) => {
+const registerUser = createAsyncThunk(
+  'auth/registerUser',
+  async (newUser: UserRegisterValues, thunkAPI) => {
+    const { dispatch } = thunkAPI;
     try {
       const res = await authAPI.registerMe(newUser);
-      console.log(res.data);
-    } catch (error) {}
+      const data: RegisterResponse = res.data;
+      if (data.token) {
+        dispatch(authActions.setRegisterStatus({ status: true }));
+        return { data };
+      }
+    } catch (error: unknown) {
+      const errMsg: string = errorMessage(error);
+      dispatch(authActions.setError({ error: errMsg }));
+    }
   }
 );
 const logMeIn = createAsyncThunk(
   'auth/logMeIn',
-  async (loginValues: LoginValues) => {
+  async (loginValues: LoginValues, thunkAPI) => {
+    const { dispatch } = thunkAPI;
     try {
       const res = await authAPI.logMeIn(loginValues);
-      console.log(res.data);
-    } catch (error) {}
+      const data: LoggedInResponse = res.data;
+      if (data) {
+        return { data };
+      }
+    } catch (error: any) {
+      const errorMsg: string = error.response.data.error;
+      dispatch(authActions.setError({ error: errorMsg }));
+    } finally {
+      dispatch(authActions.setRequestStatus({ status: 'idle' }));
+    }
   }
 );
 export const auth = slice.reducer;
 export const authActions = slice.actions;
-export const authThunks = { addUser, getUsers, logMeIn };
+export const authThunks = { registerUser, getUsers, logMeIn };

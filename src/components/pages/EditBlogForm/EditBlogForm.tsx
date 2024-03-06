@@ -6,10 +6,13 @@ import { Loader } from '../../Loader/Loader';
 import {
   Blog,
   BlogStatus,
-  FormikCommonValues,
   RequestStauts,
-} from '../../../assets/common/types';
+} from '../../../assets/types/blog_types';
 import { Navigate, useParams } from 'react-router';
+import {
+  BlogFormErrorValues,
+  EditBlogFormValues,
+} from '../../../assets/types/formik_types';
 
 const editblogform = {
   main_box: `relative container h-full w-full flex justify-center items-center text-slate-500 my-12 bg-[#fafafa]`,
@@ -34,8 +37,8 @@ export const EditBlogForm = () => {
     (state) => state.blogs.requestStatuts
   );
 
-  const validate = (values: FormikCommonValues) => {
-    const errors: FormikCommonValues = {};
+  const validate = (values: EditBlogFormValues) => {
+    const errors: BlogFormErrorValues = {};
     if (!values.author) {
       errors.author = 'Full name is required';
     }

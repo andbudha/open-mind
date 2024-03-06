@@ -4,11 +4,12 @@ import {
   BlogStatus,
   InitialState,
   RequestStauts,
-} from '../../assets/common/types';
+} from '../../assets/types/blog_types';
 import { blogsAPI } from '../../assets/api/blogsAPI';
 import { randomImageAPI } from '../../assets/api/randomImageAPI';
 import { errorMessage } from '../../assets/utils/errorMessage';
 import { toastError } from '../../assets/utils/toastError';
+import { EditBlogFormValues } from '../../assets/types/formik_types';
 
 const initialState: InitialState = {
   blogs: [] as Blog[],
@@ -122,7 +123,7 @@ const postBlog = createAsyncThunk(
 
 const editBlog = createAsyncThunk(
   'blogs/editBlog',
-  async (blog: Blog, thunkAPI) => {
+  async (blog: EditBlogFormValues, thunkAPI) => {
     const { dispatch } = thunkAPI;
     try {
       const res = await blogsAPI.editBlog(blog);

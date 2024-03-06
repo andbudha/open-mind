@@ -1,7 +1,11 @@
 import { useSelector } from 'react-redux';
 import { Navigate, useParams } from 'react-router';
 import { AppRootState, useAppDispatch } from '../../../redux/store';
-import { Blog, BlogStatus, RequestStauts } from '../../../assets/common/types';
+import {
+  Blog,
+  BlogStatus,
+  RequestStauts,
+} from '../../../assets/types/blog_types';
 import { NavLink } from 'react-router-dom';
 import { LuThumbsUp, LuThumbsDown } from 'react-icons/lu';
 import { blogsActions, blogsThunks } from '../../../redux/slices/blogsSlice';
@@ -38,6 +42,9 @@ export const BlogPage = () => {
   );
   const postStatus = useSelector<AppRootState, BlogStatus>(
     (state) => state.blogs.blogStatus
+  );
+  const authorized = useSelector<AppRootState, boolean>(
+    (state) => state.auth.authorized
   );
   const blogs = useSelector<AppRootState, Blog[]>((state) => state.blogs.blogs);
   const blog = blogs.find((blog) => blog.id === Number(id));
@@ -79,14 +86,16 @@ export const BlogPage = () => {
             </div>
           </div>
 
-          <div className={blogpage.btn_box}>
-            <NavLink to={`/blogs/${blog?.id}/editblogform`}>
-              <div className={blogpage.btn}>edit post</div>
-            </NavLink>
-            <div className={blogpage.btn} onClick={deleteOnClick}>
-              delete post
+          {authorized && (
+            <div className={blogpage.btn_box}>
+              <NavLink to={`/blogs/${blog?.id}/editblogform`}>
+                <div className={blogpage.btn}>edit post</div>
+              </NavLink>
+              <div className={blogpage.btn} onClick={deleteOnClick}>
+                delete post
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

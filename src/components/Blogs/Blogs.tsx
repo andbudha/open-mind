@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { AppRootState, useAppDispatch } from '../../redux/store';
-import { Blog } from '../../assets/common/types';
+import { Blog } from '../../assets/types/blog_types';
 import { BlogCard } from './BlogCard/BlogCard';
 import { useEffect } from 'react';
 import { blogsActions } from '../../redux/slices/blogsSlice';

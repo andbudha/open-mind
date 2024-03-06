@@ -1,7 +1,14 @@
 import { useFormik } from 'formik';
-import { useAppDispatch } from '../../../redux/store';
+import { AppRootState, useAppDispatch } from '../../../redux/store';
 import { authThunks } from '../../../redux/slices/authSlice';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Loader } from '../../Loader/Loader';
+import { AuthRequestStatus } from '../../../assets/types/auth_types';
+import {
+  UserRegisterValues,
+  RegisterErrorValues,
+} from '../../../assets/types/formik_types';
 
 const register = {
   main_box: `h-full w-full flex justify-center items-center tracking-wider`,
@@ -15,24 +22,15 @@ const register = {
   register_link: `text-orange-600 underline`,
 };
 
-export type RegisterValues = {
-  firstName: string;
-  secondName: string;
-  email: string;
-  password: string;
-  id?: number;
-};
-
-type RegisterErrorValues = {
-  firstName?: string;
-  secondName?: string;
-  email?: string;
-  password?: string;
-};
-
 export const Register = () => {
   const dispatch = useAppDispatch();
-  const validate = (values: RegisterValues) => {
+  const authRequestStatus = useSelector<AppRootState, AuthRequestStatus>(
+    (state) => state.auth.authRequestStatus
+  );
+  const registered = useSelector<AppRootState, boolean>(
+    (state) => state.auth.registered
+  );
+  const validate = (values: UserRegisterValues) => {
     const errors: RegisterErrorValues = {};
     if (!values.firstName) {
       errors.firstName = 'First-name is required';
@@ -64,14 +62,19 @@ export const Register = () => {
       password: '',
     },
     validate,
-    onSubmit: (values: RegisterValues, onSubmitProps) => {
-      dispatch(authThunks.addUser(values));
+    onSubmit: (values: UserRegisterValues, onSubmitProps) => {
+      dispatch(authThunks.registerUser(values));
       console.log(values);
       onSubmitProps.resetForm();
     },
   });
+
+  if (registered) {
+    return <Navigate to={'/login'} />;
+  }
   return (
     <div className={register.main_box}>
+      {authRequestStatus === 'loading' && <Loader />}
       <div className={register.form_box}>
         <form className={register.form} onSubmit={formik.handleSubmit}>
           <div className={register.input_box}>

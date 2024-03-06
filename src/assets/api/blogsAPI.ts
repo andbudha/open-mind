@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { Blog } from '../common/types';
+import { Blog } from '../types/blog_types';
+import { EditBlogFormValues } from '../types/formik_types';
 
 const instance = axios.create({
   baseURL: 'https://1d811849dfc8e7d5.mokky.dev/blogs',
@@ -12,7 +13,7 @@ export const blogsAPI = {
   postBlog: (blog: Blog) => {
     return instance.post('', blog);
   },
-  editBlog: (blog: Blog) => {
+  editBlog: (blog: EditBlogFormValues) => {
     return instance.patch(`/${blog.id}`, blog);
   },
   deleteBlog: (id: number) => {

@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { LoginValues } from '../../components/pages/Login/Login';
-import { RegisterValues } from '../../components/pages/Register/Register';
+import { LoggedInResponse, RegisterResponse, Users } from '../types/auth_types';
+import { LoginValues, UserRegisterValues } from '../types/formik_types';
 
 const instance = axios.create({
   baseURL: 'https://1d811849dfc8e7d5.mokky.dev',
@@ -8,12 +8,12 @@ const instance = axios.create({
 
 export const authAPI = {
   getUsers: () => {
-    return instance.get('/users');
+    return instance.get<Users[]>('/users');
   },
   logMeIn: (loginValues: LoginValues) => {
-    return instance.post('/auth', { ...loginValues });
+    return instance.post<LoggedInResponse>('/auth', { ...loginValues });
   },
-  registerMe: (newUser: RegisterValues) => {
-    return instance.post('/register', { ...newUser });
+  registerMe: (newUser: UserRegisterValues) => {
+    return instance.post<RegisterResponse>('/register', { ...newUser });
   },
 };

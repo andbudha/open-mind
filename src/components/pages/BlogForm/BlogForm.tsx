@@ -3,12 +3,12 @@ import { AppRootState, useAppDispatch } from '../../../redux/store';
 import { blogsThunks } from '../../../redux/slices/blogsSlice';
 import { useSelector } from 'react-redux';
 import { Loader } from '../../Loader/Loader';
-import {
-  BlogStatus,
-  FormikCommonValues,
-  RequestStauts,
-} from '../../../assets/common/types';
+import { BlogStatus, RequestStauts } from '../../../assets/types/blog_types';
 import { Navigate } from 'react-router';
+import {
+  BlogFormErrorValues,
+  BlogFormValues,
+} from '../../../assets/types/formik_types';
 
 const blogform = {
   main_box: `relative container h-full w-full flex justify-center items-center text-slate-500 my-12 bg-[#fafafa]`,
@@ -32,8 +32,8 @@ export const BlogForm = () => {
     (state) => state.blogs.blogStatus
   );
 
-  const validate = (values: FormikCommonValues) => {
-    const errors: FormikCommonValues = {};
+  const validate = (values: BlogFormValues) => {
+    const errors: BlogFormErrorValues = {};
     if (!values.author) {
       errors.author = 'Full name is required';
     }
@@ -54,6 +54,7 @@ export const BlogForm = () => {
   const formik = useFormik({
     initialValues: {
       id: 0,
+      userId: 0,
       author: '',
       title: '',
       image: '',
