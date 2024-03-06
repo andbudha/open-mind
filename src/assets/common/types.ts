@@ -29,3 +29,26 @@ export type FormikCommonValues = {
   image?: string;
   content?: string;
 };
+
+type LoggedInResponseData = {
+  firstName: string;
+  secondName: string;
+  email: string;
+  id: number;
+};
+export type LoggedInResponse = {
+  token: string;
+  data: LoggedInResponseData;
+};
+
+type RegisterResponseData = {
+  firstName: string;
+  secondName: string;
+  email: string;
+  password: string;
+  id: number;
+};
+export type RegisterResponse = {
+  token: string;
+  data: RegisterResponseData;
+};
