@@ -1,4 +1,4 @@
-export type Users = {
+export type User = {
   firstName: string;
   secondName: string;
   email: string;
@@ -11,7 +11,8 @@ export type AuthInitialState = {
   registered: boolean;
   authRequestStatus: AuthRequestStatus;
   error: null | string;
-  users: Users[];
+  user: LoggedInResponse;
+  users: User[];
 };
 
 type LoggedInResponseData = {

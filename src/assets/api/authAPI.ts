@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LoggedInResponse, RegisterResponse, Users } from '../types/auth_types';
+import { LoggedInResponse, RegisterResponse, User } from '../types/auth_types';
 import { LoginValues, UserRegisterValues } from '../types/formik_types';
 
 const instance = axios.create({
@@ -8,7 +8,7 @@ const instance = axios.create({
 
 export const authAPI = {
   getUsers: () => {
-    return instance.get<Users[]>('/users');
+    return instance.get<User[]>('/users');
   },
   logMeIn: (loginValues: LoginValues) => {
     return instance.post<LoggedInResponse>('/auth', { ...loginValues });

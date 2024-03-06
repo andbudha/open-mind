@@ -8,7 +8,7 @@ import {
   AuthRequestStatus,
   LoggedInResponse,
   RegisterResponse,
-  Users,
+  User,
 } from '../../assets/types/auth_types';
 import {
   UserRegisterValues,
@@ -20,7 +20,8 @@ const initialState: AuthInitialState = {
   registered: false,
   authRequestStatus: 'idle' as AuthRequestStatus,
   error: null,
-  users: [] as Users[],
+  user: {} as LoggedInResponse,
+  users: [] as User[],
 };
 
 const slice = createSlice({
@@ -45,6 +46,12 @@ const slice = createSlice({
     },
     setRegisterStatus: (state, action: PayloadAction<{ status: boolean }>) => {
       state.registered = action.payload.status;
+    },
+    setLoggedInUser: (
+      state,
+      action: PayloadAction<{ user: LoggedInResponse }>
+    ) => {
+      state.user = action.payload.user;
     },
   },
   extraReducers: (builder) => {
@@ -74,7 +81,7 @@ const slice = createSlice({
 const getUsers = createAsyncThunk('auth/getUsers', async () => {
   try {
     const res = await authAPI.getUsers();
-    const users: Users[] = res.data;
+    const users: User[] = res.data;
     console.log(users);
   } catch (error) {}
 });
@@ -102,7 +109,9 @@ const logMeIn = createAsyncThunk(
     try {
       const res = await authAPI.logMeIn(loginValues);
       const data: LoggedInResponse = res.data;
+      console.log(data);
       if (data) {
+        dispatch(authActions.setLoggedInUser({ user: data }));
         return { data };
       }
     } catch (error: any) {

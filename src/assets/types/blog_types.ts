@@ -4,14 +4,6 @@ export type Rating = {
   likes: number;
   dislikes: number;
 };
-// export type Blog = {
-//   id?: number | undefined;
-//   title?: string | undefined;
-//   content?: string | undefined;
-//   author?: string | undefined;
-//   image?: string | undefined;
-//   rating?: Rating | undefined;
-// };
 export type Blog = {
   id: number;
   userId: number;
