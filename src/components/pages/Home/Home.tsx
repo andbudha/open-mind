@@ -12,7 +12,7 @@ const home = {
 export const Home = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(authActions.setAuthRequestStatus({ status: 'idle' }));
+    dispatch(authActions.setRequestStatus({ status: 'idle' }));
   }, []);
 
   return (

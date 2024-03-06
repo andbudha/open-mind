@@ -2,7 +2,7 @@ import toast from 'react-hot-toast';
 
 export const toastSuccess = (message: string) =>
   toast.success(message, {
-    duration: 6000,
+    duration: 5000,
     style: {
       border: '1px solid #FC6736',
       padding: '16px',
