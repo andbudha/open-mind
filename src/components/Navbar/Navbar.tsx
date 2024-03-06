@@ -45,6 +45,19 @@ export const Navbar = () => {
         )}
         {authorized && (
           <NavLink
+            to="blogs/myblogs"
+            className={`${navbar.btn}`}
+            style={({ isActive }) => ({
+              background: isActive ? '#FBA834' : '',
+              color: isActive ? '#fff' : '',
+            })}
+          >
+            <div>my blogs </div>
+            <LuPenSquare className={navbar.icon} />
+          </NavLink>
+        )}
+        {authorized && (
+          <NavLink
             to="blogs/blogform"
             className={`${navbar.btn}`}
             style={({ isActive }) => ({

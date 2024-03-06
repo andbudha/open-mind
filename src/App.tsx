@@ -14,6 +14,7 @@ import { Toaster } from 'react-hot-toast';
 import { Login } from './components/pages/Login/Login';
 import { Register } from './components/pages/Register/Register';
 import { authThunks } from './redux/slices/authSlice';
+import { MyBlogs } from './components/Blogs/MyBlogs';
 const app = {
   main: `container mx-auto h-dvh bg-[#fafafa]`,
 };
@@ -31,6 +32,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="blogs" element={<Blogs />} />
+          <Route path="blogs/myblogs" element={<MyBlogs />} />
           <Route path="blogs/:id" element={<BlogPage />} />
           <Route path="blogs/blogform" element={<BlogForm />} />
           <Route path="blogs/:id/editblogform" element={<EditBlogForm />} />
