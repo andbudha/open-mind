@@ -64,7 +64,6 @@ export const Register = () => {
     validate,
     onSubmit: (values: UserRegisterValues, onSubmitProps) => {
       dispatch(authThunks.registerUser(values));
-      console.log(values);
       onSubmitProps.resetForm();
     },
   });

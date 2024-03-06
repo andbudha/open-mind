@@ -9,6 +9,7 @@ import {
   BlogFormErrorValues,
   BlogFormValues,
 } from '../../../assets/types/formik_types';
+import { LoggedInResponse } from '../../../assets/types/auth_types';
 
 const blogform = {
   main_box: `relative container h-full w-full flex justify-center items-center text-slate-500 my-12 bg-[#fafafa]`,
@@ -30,6 +31,10 @@ export const BlogForm = () => {
   );
   const blogStatus = useSelector<AppRootState, BlogStatus>(
     (state) => state.blogs.blogStatus
+  );
+
+  const loggedInUser = useSelector<AppRootState, LoggedInResponse>(
+    (state) => state.auth.user
   );
 
   const validate = (values: BlogFormValues) => {
@@ -54,7 +59,7 @@ export const BlogForm = () => {
   const formik = useFormik({
     initialValues: {
       id: 0,
-      userId: 0,
+      userId: loggedInUser.data.id,
       author: '',
       title: '',
       image: '',

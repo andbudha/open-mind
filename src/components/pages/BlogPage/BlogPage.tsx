@@ -10,9 +10,9 @@ import { NavLink } from 'react-router-dom';
 import { LuThumbsUp, LuThumbsDown } from 'react-icons/lu';
 import { blogsActions, blogsThunks } from '../../../redux/slices/blogsSlice';
 import { Loader } from '../../Loader/Loader';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-const blogpage = {
+const blogPage = {
   main_box: `h-full w-full flex justify-center items-start text-slate-600 bg-[#fafafa]`,
   blog_box: `min-h-[400px] max-w-[800px] min-w-[300px] my-10 border border-orange-200 rounded-md shadow-lg  bg-[#fff]`,
   img_box: `w-full flex justify-center items-center my-6`,
@@ -60,38 +60,38 @@ export const BlogPage = () => {
     return <Navigate to={'/'} />;
   }
   return (
-    <div className={blogpage.main_box}>
+    <div className={blogPage.main_box}>
       {requestStatuts === 'loading' && <Loader />}
-      <div className={blogpage.blog_box}>
-        <div className={blogpage.img_box}>
-          <img className={blogpage.img} src={blog?.image} alt="blog-image" />
+      <div className={blogPage.blog_box}>
+        <div className={blogPage.img_box}>
+          <img className={blogPage.img} src={blog?.image} alt="blog-image" />
         </div>
-        <div className={blogpage.info_box}>
-          <div className={blogpage.title_box}>{blog?.title}</div>
-          <div className={blogpage.author_box}> by: {blog?.author}</div>
+        <div className={blogPage.info_box}>
+          <div className={blogPage.title_box}>{blog?.title}</div>
+          <div className={blogPage.author_box}> by: {blog?.author}</div>
         </div>
-        <div className={blogpage.content_box}>{blog?.content}</div>
-        <div className={blogpage.footer}>
-          <div className={blogpage.thumb_box}>
-            <div className={blogpage.thumb_icon_box}>
+        <div className={blogPage.content_box}>{blog?.content}</div>
+        <div className={blogPage.footer}>
+          <div className={blogPage.thumb_box}>
+            <div className={blogPage.thumb_icon_box}>
               <LuThumbsUp
-                className={blogpage.thumb_icon}
+                className={blogPage.thumb_icon}
                 onClick={() => likeOnClick(blog)}
               />
-              <div className={blogpage.likes}>{blog?.rating?.likes}</div>
+              <div className={blogPage.likes}>{blog?.rating?.likes}</div>
             </div>
-            <div className={blogpage.thumb_icon_box}>
-              <LuThumbsDown className={blogpage.thumb_icon} />
-              <div className={blogpage.likes}>{blog?.rating?.dislikes}</div>
+            <div className={blogPage.thumb_icon_box}>
+              <LuThumbsDown className={blogPage.thumb_icon} />
+              <div className={blogPage.likes}>{blog?.rating?.dislikes}</div>
             </div>
           </div>
 
           {authorized && (
-            <div className={blogpage.btn_box}>
+            <div className={blogPage.btn_box}>
               <NavLink to={`/blogs/${blog?.id}/editblogform`}>
-                <div className={blogpage.btn}>edit post</div>
+                <div className={blogPage.btn}>edit post</div>
               </NavLink>
-              <div className={blogpage.btn} onClick={deleteOnClick}>
+              <div className={blogPage.btn} onClick={deleteOnClick}>
                 delete post
               </div>
             </div>
